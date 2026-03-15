@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <mask id="cutout">
+      <rect width="1024" height="1024" fill="white"/>
+      <text
+        x="480"
+        y="512"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="960"
+        fill="black"
+        text-anchor="middle"
+      >„</text>
+    </mask>
+  </defs>
+
+  <!-- Key shadow -->
+  <rect x="128" y="160" width="768" height="768" rx="128" fill="#000" opacity="0.2"/>
+  <!-- Key body -->
+  <rect x="96" y="96" width="768" height="768" rx="128" fill="#000" mask="url(#cutout)"/>
+  <!-- Key inner bevel -->
+  <rect x="160" y="160" width="640" height="640" rx="96" fill="#333" mask="url(#cutout)"/>
+</svg>

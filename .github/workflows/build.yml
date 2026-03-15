@@ -1,0 +1,63 @@
+# .github/workflows/build.yml
+#
+# Builds SymbolPad for macOS and Windows on every push to main,
+# and produces downloadable installers as GitHub Release assets.
+
+name: Build SymbolPad
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # also allows manual trigger from GitHub UI
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: macos-latest
+            args: --target universal-apple-darwin  # builds fat binary (Intel + Apple Silicon)
+          - platform: windows-latest
+            args: ''
+
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          # Required for the macOS universal binary
+          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+
+      - name: Cache Rust build
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build Tauri app
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: v__VERSION__        # uses version from tauri.conf.json
+          releaseName: SymbolPad v__VERSION__
+          releaseBody: |
+            ### Downloads
+            - **macOS**: grab the `.dmg`
+            - **Windows**: grab the `.msi` or `-setup.exe`
+          releaseDraft: true           # publishes as a draft — you review before releasing
+          prerelease: false
+          args: ${{ matrix.args }}
