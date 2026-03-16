@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "identifier": "com.symbolpad.app",
   "build": {
-    "frontendDist": "../src"
+    "frontendDist": ".."
   },
   "app": {
     "windows": [
