@@ -2,6 +2,7 @@
   "name": "symbol-pad",
   "version": "0.1.0",
   "scripts": {
+	"tauri": "tauri",
     "dev": "tauri dev",
     "build": "tauri build",
     "web": "npx serve src -l 3000"
