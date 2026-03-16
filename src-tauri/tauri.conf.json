@@ -1,9 +1,9 @@
 {
   "productName": "SymbolPad",
   "version": "0.1.0",
-  "identifier": "com.symbolpad.app",
+  "identifier": "com.symbolpad",
   "build": {
-    "frontendDist": ".."
+    "frontendDist": "../src"
   },
   "app": {
     "windows": [
