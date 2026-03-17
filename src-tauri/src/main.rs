@@ -38,7 +38,8 @@ fn main() {
 			TrayIconBuilder::new()
 				.icon(icon)
 				.icon_as_template(true)
-				.on_tray_icon_event(move |_tray, event| {
+				.on_tray_icon_event(move |tray, event| {
+					tauri_plugin_positioner::on_tray_event(tray.app_handle(), &event);
 					if let TrayIconEvent::Click { .. } = event {
 						if win_tray.is_visible().unwrap_or(false) {
 							let _ = win_tray.hide();
