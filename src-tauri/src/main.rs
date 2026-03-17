@@ -19,6 +19,9 @@ fn main() {
 			let window = app.get_webview_window("main").unwrap();
 			let win_blur = window.clone();
 
+			// Hide on startup — only show when tray icon is clicked
+			let _ = window.hide();
+
 			let last_shown = Arc::new(Mutex::new(Instant::now() - Duration::from_secs(10)));
 			let last_shown_blur = last_shown.clone();
 
@@ -31,7 +34,7 @@ fn main() {
 				}
 			});
 
-			let icon = Image::from_path("../icons/tray.png")
+			let icon = Image::from_bytes(include_bytes!("../icons/tray.png"))
 				.unwrap_or_else(|_| app.default_window_icon().unwrap().clone());
 
 			let win_tray = window.clone();
