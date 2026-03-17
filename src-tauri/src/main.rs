@@ -31,7 +31,7 @@ fn main() {
 				}
 			});
 
-			let icon = Image::from_path("icons/tray.png")
+			let icon = Image::from_path("../icons/tray.png")
 				.unwrap_or_else(|_| app.default_window_icon().unwrap().clone());
 
 			let win_tray = window.clone();
