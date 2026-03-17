@@ -25,7 +25,7 @@ fn main() {
 			window.on_window_event(move |event| {
 				if let WindowEvent::Focused(false) = event {
 					let elapsed = last_shown_blur.lock().unwrap().elapsed();
-					if elapsed > Duration::from_millis(200) {
+					if elapsed > Duration::from_millis(500) {
 						let _ = win_blur.hide();
 					}
 				}
