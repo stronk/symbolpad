@@ -22,10 +22,13 @@
     ]
   },
   "bundle": {
-    "active": true,
-    "targets": "all",
-    "icon": ["icons/icon.png",
-             "icons/icon.ico"
-    ]
+	"active": true,
+	"targets": "all",
+	"icon": ["icons/icon.png", "icons/icon.ico"],
+	"macOS": {
+	  "info": {
+		"LSUIElement": true
+	  }
+	}
   }
 }
