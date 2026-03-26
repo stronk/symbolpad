@@ -26,8 +26,8 @@
 	"targets": "all",
 	"icon": ["icons/icon.png", "icons/icon.ico"],
 	"macOS": {
-	  "info": {
-		"LSUIElement": true
+	  "infoPlist": {
+	    "LSUIElement": true
 	  }
 	}
   }
