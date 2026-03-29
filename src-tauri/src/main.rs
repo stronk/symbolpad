@@ -34,11 +34,19 @@ fn main() {
 				}
 			});
 
-			let icon = Image::from_bytes(include_bytes!("../icons/tray.png"))
-				.unwrap_or_else(|_| app.default_window_icon().unwrap().clone());
+			let icon = match Image::from_bytes(include_bytes!("../icons/tray.png")) {
+				Ok(img) => {
+					eprintln!("✅ tray.png loaded successfully");
+					img
+				}
+				Err(e) => {
+					eprintln!("❌ Failed to load tray.png: {:?}", e);
+					app.default_window_icon().unwrap().clone()
+				}
+			};
 
 			let win_tray = window.clone();
-			TrayIconBuilder::new()
+			let tray = TrayIconBuilder::new()
 				.icon(icon)
 				.icon_as_template(false)
 				.on_tray_icon_event(move |tray, event| {
@@ -54,7 +62,12 @@ fn main() {
 						}
 					}
 				})
-				.build(app)?;
+				.build(app);
+
+			match tray {
+				Ok(_) => eprintln!("✅ Tray icon built successfully"),
+				Err(e) => eprintln!("❌ Tray icon failed: {:?}", e),
+			}
 
 			Ok(())
 		})
