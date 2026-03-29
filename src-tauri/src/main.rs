@@ -40,7 +40,7 @@ fn main() {
 			let win_tray = window.clone();
 			TrayIconBuilder::new()
 				.icon(icon)
-				.icon_as_template(true)
+				.icon_as_template(false)
 				.on_tray_icon_event(move |tray, event| {
 					tauri_plugin_positioner::on_tray_event(tray.app_handle(), &event);
 					if let TrayIconEvent::Click { .. } = event {
