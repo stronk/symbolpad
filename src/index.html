@@ -374,17 +374,16 @@
   // ── Symbols ────────────────────────────────────────────────────────────────
 
   let symbols = [
-	{ char: "–",      label: "En dash" },
 	{ char: "\u2018", label: "Single open quote" },
 	{ char: "\u2019", label: "Single close quote" },
 	{ char: "„",      label: "Double low quote" },
 	{ char: "\u201D", label: "Double close quote" },
 	{ char: "¡",      label: "Inverted exclamation" },
+	{ char: "–",      label: "En dash" },
 	{ char: "→",      label: "Right arrow" },
 	{ char: "≤",      label: "Less or equal" },
   ];
 
-  let dragSrc = null;
   const grid       = document.getElementById("grid");
   const editBtn    = document.getElementById("edit-btn");
   const modal      = document.getElementById("modal");
@@ -417,10 +416,49 @@
 	document.body.removeChild(ta);
   }
 
+  // ── Drag to reorder (pointer-based — HTML5 drag API is intercepted by Tauri on macOS) ──
+
+  let ptrSrc  = null; // card being dragged
+  let ptrOver = null; // card currently hovered over
+  let ptrMoved = false;
+
+  document.addEventListener("pointermove", e => {
+	if (!ptrSrc) return;
+	if (!ptrMoved) {
+	  ptrMoved = true;
+	  ptrSrc.classList.add("dragging");
+	}
+	// Temporarily hide the dragged card from hit-testing so elementFromPoint finds cards beneath it
+	ptrSrc.style.pointerEvents = "none";
+	const el = document.elementFromPoint(e.clientX, e.clientY);
+	ptrSrc.style.pointerEvents = "";
+	const target = el?.closest?.(".card") ?? null;
+	if (ptrOver !== target) {
+	  if (ptrOver) ptrOver.classList.remove("drag-over");
+	  ptrOver = (target && target !== ptrSrc) ? target : null;
+	  if (ptrOver) ptrOver.classList.add("drag-over");
+	}
+  });
+
+  document.addEventListener("pointerup", () => {
+	if (!ptrSrc) return;
+	ptrSrc.classList.remove("dragging");
+	if (ptrOver) {
+	  ptrOver.classList.remove("drag-over");
+	  const cards = [...grid.querySelectorAll(".card")];
+	  const si = cards.indexOf(ptrSrc), ti = cards.indexOf(ptrOver);
+	  if (si !== -1 && ti !== -1) {
+		[symbols[si], symbols[ti]] = [symbols[ti], symbols[si]];
+		si < ti ? grid.insertBefore(ptrSrc, ptrOver.nextSibling) : grid.insertBefore(ptrSrc, ptrOver);
+	  }
+	}
+	ptrSrc  = null;
+	ptrOver = null;
+  });
+
   function buildCard(sym) {
 	const card = document.createElement("div");
 	card.className = "card";
-	card.draggable = true;
 	card.innerHTML = `
 	  <span class="delete-btn">×</span>
 	  <span class="toast">Copied</span>
@@ -435,43 +473,21 @@
 	  card.remove();
 	});
 
-	let didDrag = false;
+	card.addEventListener("pointerdown", e => {
+	  if (e.button !== 0) return;
+	  ptrMoved = false;
+	  ptrSrc = card;
+	});
 
 	card.addEventListener("click", () => {
 	  if (document.body.classList.contains("edit-mode")) return;
-	  if (didDrag) { didDrag = false; return; }
+	  if (ptrMoved) return; // was a drag, not a tap
 	  const flash = () => { card.classList.add("copied"); setTimeout(() => card.classList.remove("copied"), 1200); };
 	  if (navigator.clipboard) {
 		navigator.clipboard.writeText(sym.char).then(flash).catch(() => fallbackCopy(sym.char, flash));
 	  } else {
 		fallbackCopy(sym.char, flash);
 	  }
-	});
-
-	// Single dragstart handler — sets didDrag flag and manages drag state
-	card.addEventListener("dragstart", e => {
-	  didDrag = true;
-	  dragSrc = card;
-	  e.dataTransfer.effectAllowed = "move";
-	  setTimeout(() => card.classList.add("dragging"), 0);
-	});
-	card.addEventListener("dragend", () => {
-	  card.classList.remove("dragging");
-	  grid.querySelectorAll(".card").forEach(c => c.classList.remove("drag-over"));
-	});
-	card.addEventListener("dragover", e => {
-	  e.preventDefault();
-	  if (card !== dragSrc) card.classList.add("drag-over");
-	});
-	card.addEventListener("dragleave", () => card.classList.remove("drag-over"));
-	card.addEventListener("drop", e => {
-	  e.preventDefault();
-	  card.classList.remove("drag-over");
-	  if (!dragSrc || dragSrc === card) return;
-	  const cards = [...grid.querySelectorAll(".card")];
-	  const si = cards.indexOf(dragSrc), ti = cards.indexOf(card);
-	  [symbols[si], symbols[ti]] = [symbols[ti], symbols[si]];
-	  si < ti ? grid.insertBefore(dragSrc, card.nextSibling) : grid.insertBefore(dragSrc, card);
 	});
 
 	return card;
