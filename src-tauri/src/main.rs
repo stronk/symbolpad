@@ -50,17 +50,18 @@ fn main() {
 
 			let win_tray = window.clone();
 			let win_menu = window.clone();
+			let last_shown_menu = last_shown_tray.clone();
 
 			TrayIconBuilder::new()
 				.icon(icon)
 				.icon_as_template(true)
 				.menu(&menu)
-				.menu_on_left_click(false) // left click toggles panel; right click shows menu
+				.show_menu_on_left_click(false) // left click toggles panel; right click shows menu
 				.on_menu_event(move |app, event| {
 					match event.id.as_ref() {
 						"quit" => app.exit(0),
 						"edit" => {
-							*last_shown_tray.lock().unwrap() = Instant::now();
+							*last_shown_menu.lock().unwrap() = Instant::now();
 							let _ = win_menu.move_window(Position::TrayCenter);
 							let _ = win_menu.show();
 							let _ = win_menu.set_focus();
