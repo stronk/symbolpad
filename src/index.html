@@ -6,136 +6,136 @@
 <title>Symbol Pad</title>
 <style>
   :root {
-    --bg: #f5f5f3;
-    --card-bg: #fff;
-    --card-border: #e5e5e5;
-    --card-border-hover: #bbb;
-    --text: #222;
-    --label: #aaa;
-    --heading: #888;
-    --btn-bg: #fff;
-    --btn-border: #ddd;
-    --btn-color: #555;
-    --shadow: rgba(0,0,0,0.07);
-    --modal-overlay: rgba(0,0,0,0.18);
-    --modal-shadow: rgba(0,0,0,0.12);
-    --add-color: #ccc;
-    --add-hover: #aaa;
-    --copied-border: #4caf7d;
-    --copied-bg: #f6fff9;
-    --copied-color: #4caf7d;
-    --drag-bg: #fafafa;
-    --delete-bg: #ee0055;
+	--bg: #f5f5f3;
+	--card-bg: #fff;
+	--card-border: #e5e5e5;
+	--card-border-hover: #bbb;
+	--text: #222;
+	--label: #aaa;
+	--heading: #888;
+	--btn-bg: #fff;
+	--btn-border: #ddd;
+	--btn-color: #555;
+	--shadow: rgba(0,0,0,0.07);
+	--modal-overlay: rgba(0,0,0,0.18);
+	--modal-shadow: rgba(0,0,0,0.12);
+	--add-color: #ccc;
+	--add-hover: #aaa;
+	--copied-border: #4caf7d;
+	--copied-bg: #f6fff9;
+	--copied-color: #4caf7d;
+	--drag-bg: #fafafa;
+	--delete-bg: #ee0055;
   }
 
   .dark {
-    --bg: #1a1a1a;
-    --card-bg: #252525;
-    --card-border: #333;
-    --card-border-hover: #555;
-    --text: #e8e8e8;
-    --label: #666;
-    --heading: #555;
-    --btn-bg: #252525;
-    --btn-border: #3a3a3a;
-    --btn-color: #aaa;
-    --shadow: rgba(0,0,0,0.3);
-    --modal-overlay: rgba(0,0,0,0.5);
-    --modal-shadow: rgba(0,0,0,0.4);
-    --add-color: #444;
-    --add-hover: #666;
-    --copied-bg: #1a2e22;
-    --drag-bg: #2e2e2e;
-    --delete-bg: #cc0044;
+	--bg: #1a1a1a;
+	--card-bg: #252525;
+	--card-border: #333;
+	--card-border-hover: #555;
+	--text: #e8e8e8;
+	--label: #666;
+	--heading: #555;
+	--btn-bg: #252525;
+	--btn-border: #3a3a3a;
+	--btn-color: #aaa;
+	--shadow: rgba(0,0,0,0.3);
+	--modal-overlay: rgba(0,0,0,0.5);
+	--modal-shadow: rgba(0,0,0,0.4);
+	--add-color: #444;
+	--add-hover: #666;
+	--copied-bg: #1a2e22;
+	--drag-bg: #2e2e2e;
+	--delete-bg: #cc0044;
   }
 
   @media (prefers-color-scheme: dark) {
-    :root:not(.light):not(.dark) {
-      --bg: #1a1a1a;
-      --card-bg: #252525;
-      --card-border: #333;
-      --card-border-hover: #555;
-      --text: #e8e8e8;
-      --label: #666;
-      --heading: #555;
-      --btn-bg: #252525;
-      --btn-border: #3a3a3a;
-      --btn-color: #aaa;
-      --shadow: rgba(0,0,0,0.3);
-      --modal-overlay: rgba(0,0,0,0.5);
-      --modal-shadow: rgba(0,0,0,0.4);
-      --add-color: #444;
-      --add-hover: #666;
-      --copied-bg: #1a2e22;
-      --drag-bg: #2e2e2e;
-      --delete-bg: #cc0044;
-    }
+	:root:not(.light):not(.dark) {
+	  --bg: #1a1a1a;
+	  --card-bg: #252525;
+	  --card-border: #333;
+	  --card-border-hover: #555;
+	  --text: #e8e8e8;
+	  --label: #666;
+	  --heading: #555;
+	  --btn-bg: #252525;
+	  --btn-border: #3a3a3a;
+	  --btn-color: #aaa;
+	  --shadow: rgba(0,0,0,0.3);
+	  --modal-overlay: rgba(0,0,0,0.5);
+	  --modal-shadow: rgba(0,0,0,0.4);
+	  --add-color: #444;
+	  --add-hover: #666;
+	  --copied-bg: #1a2e22;
+	  --drag-bg: #2e2e2e;
+	  --delete-bg: #cc0044;
+	}
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    padding: 2rem;
-    transition: background 0.4s, color 0.4s;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	background: var(--bg);
+	color: var(--text);
+	min-height: 100vh;
+	padding: 2rem;
+	transition: background 0.4s, color 0.4s;
   }
 
   header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 1.5rem;
   }
 
   h1 {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--heading);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+	font-size: 1rem;
+	font-weight: 500;
+	color: var(--heading);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
   }
 
   .header-btns { display: flex; gap: 0.5rem; }
 
   .hdr-btn {
-    font-size: 0.75rem;
-    font-family: inherit;
-    font-weight: 500;
-    padding: 0.3rem 0.85rem;
-    border-radius: 6px;
-    border: 1px solid var(--btn-border);
-    background: var(--btn-bg);
-    color: var(--btn-color);
-    cursor: pointer;
-    transition: background 0.15s, color 0.15s, border-color 0.15s;
+	font-size: 0.75rem;
+	font-family: inherit;
+	font-weight: 500;
+	padding: 0.3rem 0.85rem;
+	border-radius: 6px;
+	border: 1px solid var(--btn-border);
+	background: var(--btn-bg);
+	color: var(--btn-color);
+	cursor: pointer;
+	transition: background 0.15s, color 0.15s, border-color 0.15s;
   }
   .hdr-btn:hover { border-color: var(--card-border-hover); }
   .hdr-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
   #theme-btn { font-size: 0.85rem; padding: 0.3rem 0.65rem; }
 
   .grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
   }
 
   .card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 10px;
-    width: 100px; height: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: grab;
-    transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s, background 0.4s;
-    user-select: none;
-    position: relative;
-    gap: 0.4rem;
+	background: var(--card-bg);
+	border: 1px solid var(--card-border);
+	border-radius: 10px;
+	width: 100px; height: 100px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	cursor: grab;
+	transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s, background 0.4s;
+	user-select: none;
+	position: relative;
+	gap: 0.4rem;
   }
   .card:hover { border-color: var(--card-border-hover); box-shadow: 0 2px 8px var(--shadow); transform: translateY(-1px); }
   .card:active { cursor: grabbing; }
@@ -144,119 +144,119 @@
   .card.drag-over { border-color: var(--card-border-hover); border-style: dashed; background: var(--drag-bg); }
 
   .symbol {
-    font-size: 2rem;
-    line-height: 1;
-    font-family: Georgia, "Times New Roman", serif;
-    pointer-events: none;
+	font-size: 2rem;
+	line-height: 1;
+	font-family: Georgia, "Times New Roman", serif;
+	pointer-events: none;
   }
   .label {
-    font-size: 0.65rem;
-    color: var(--label);
-    text-align: center;
-    padding: 0 0.4rem;
-    line-height: 1.3;
-    pointer-events: none;
+	font-size: 0.65rem;
+	color: var(--label);
+	text-align: center;
+	padding: 0 0.4rem;
+	line-height: 1.3;
+	pointer-events: none;
   }
   .toast {
-    position: absolute;
-    top: 8px; right: 10px;
-    font-size: 0.6rem;
-    color: var(--copied-color);
-    font-weight: 600;
-    opacity: 0;
-    transition: opacity 0.2s;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    pointer-events: none;
+	position: absolute;
+	top: 8px; right: 10px;
+	font-size: 0.6rem;
+	color: var(--copied-color);
+	font-weight: 600;
+	opacity: 0;
+	transition: opacity 0.2s;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	pointer-events: none;
   }
   .card.copied .toast { opacity: 1; }
 
   .delete-btn {
-    display: none;
-    position: absolute;
-    top: -7px; right: -7px;
-    width: 18px; height: 18px;
-    border-radius: 50%;
-    background: var(--delete-bg);
-    color: #fff;
-    font-size: 0.65rem;
-    font-weight: 700;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border: 2px solid var(--bg);
-    z-index: 1;
+	display: none;
+	position: absolute;
+	top: -7px; right: -7px;
+	width: 18px; height: 18px;
+	border-radius: 50%;
+	background: var(--delete-bg);
+	color: #fff;
+	font-size: 0.65rem;
+	font-weight: 700;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	border: 2px solid var(--bg);
+	z-index: 1;
   }
   body.edit-mode .card { cursor: grab; border-style: dashed; }
   body.edit-mode .card:hover { border-color: var(--card-border-hover); transform: none; box-shadow: none; }
   body.edit-mode .delete-btn { display: flex; }
 
   .add-card {
-    display: none;
-    background: var(--card-bg);
-    border: 1px dashed var(--add-color);
-    border-radius: 10px;
-    width: 100px; height: 100px;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--add-color);
-    font-size: 1.8rem;
-    font-weight: 300;
-    transition: border-color 0.15s, color 0.15s, background 0.4s;
-    user-select: none;
+	display: none;
+	background: var(--card-bg);
+	border: 1px dashed var(--add-color);
+	border-radius: 10px;
+	width: 100px; height: 100px;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	color: var(--add-color);
+	font-size: 1.8rem;
+	font-weight: 300;
+	transition: border-color 0.15s, color 0.15s, background 0.4s;
+	user-select: none;
   }
   .add-card:hover { border-color: var(--add-hover); color: var(--add-hover); }
   body.edit-mode .add-card { display: flex; }
 
   .modal-backdrop {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: var(--modal-overlay);
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
+	display: none;
+	position: fixed;
+	inset: 0;
+	background: var(--modal-overlay);
+	align-items: center;
+	justify-content: center;
+	z-index: 10;
   }
   .modal-backdrop.open { display: flex; }
   .modal {
-    background: var(--card-bg);
-    border-radius: 12px;
-    padding: 1.5rem;
-    width: 260px;
-    box-shadow: 0 8px 30px var(--modal-shadow);
-    display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
-    transition: background 0.4s;
+	background: var(--card-bg);
+	border-radius: 12px;
+	padding: 1.5rem;
+	width: 260px;
+	box-shadow: 0 8px 30px var(--modal-shadow);
+	display: flex;
+	flex-direction: column;
+	gap: 0.85rem;
+	transition: background 0.4s;
   }
   .modal h2 { font-size: 0.85rem; font-weight: 600; color: var(--text); }
   .modal input {
-    font-family: inherit;
-    font-size: 0.85rem;
-    padding: 0.45rem 0.65rem;
-    border: 1px solid var(--btn-border);
-    border-radius: 6px;
-    outline: none;
-    width: 100%;
-    background: var(--bg);
-    color: var(--text);
-    transition: border-color 0.15s, background 0.4s;
+	font-family: inherit;
+	font-size: 0.85rem;
+	padding: 0.45rem 0.65rem;
+	border: 1px solid var(--btn-border);
+	border-radius: 6px;
+	outline: none;
+	width: 100%;
+	background: var(--bg);
+	color: var(--text);
+	transition: border-color 0.15s, background 0.4s;
   }
   .modal input:focus { border-color: var(--card-border-hover); }
   .modal input.symbol-input { font-family: Georgia, serif; font-size: 1.4rem; text-align: center; width: 60px; align-self: center; }
   .modal-row { display: flex; gap: 0.5rem; }
   .modal button {
-    font-family: inherit;
-    font-size: 0.8rem;
-    font-weight: 500;
-    padding: 0.45rem 0.9rem;
-    border-radius: 6px;
-    border: 1px solid var(--btn-border);
-    cursor: pointer;
-    flex: 1;
-    background: var(--btn-bg);
-    color: var(--btn-color);
+	font-family: inherit;
+	font-size: 0.8rem;
+	font-weight: 500;
+	padding: 0.45rem 0.9rem;
+	border-radius: 6px;
+	border: 1px solid var(--btn-border);
+	cursor: pointer;
+	flex: 1;
+	background: var(--btn-bg);
+	color: var(--btn-color);
   }
   .btn-add { background: var(--text) !important; color: var(--bg) !important; border-color: var(--text) !important; }
   .btn-add:hover { opacity: 0.85; }
@@ -268,8 +268,8 @@
 <header>
   <h1>Symbol Pad</h1>
   <div class="header-btns">
-    <button class="hdr-btn" id="theme-btn" title="Toggle dark mode">🌙</button>
-    <button class="hdr-btn" id="edit-btn">Edit</button>
+	<button class="hdr-btn" id="theme-btn" title="Toggle dark mode">🌙</button>
+	<button class="hdr-btn" id="edit-btn">Edit</button>
   </div>
 </header>
 
@@ -277,13 +277,13 @@
 
 <div class="modal-backdrop" id="modal">
   <div class="modal">
-    <h2>Add symbol</h2>
-    <input class="symbol-input" id="input-char" maxlength="2" placeholder="→">
-    <input id="input-label" placeholder="Label (e.g. Right arrow)">
-    <div class="modal-row">
-      <button class="btn-cancel" id="modal-cancel">Cancel</button>
-      <button class="btn-add" id="modal-add">Add</button>
-    </div>
+	<h2>Add symbol</h2>
+	<input class="symbol-input" id="input-char" maxlength="2" placeholder="→">
+	<input id="input-label" placeholder="Label (e.g. Right arrow)">
+	<div class="modal-row">
+	  <button class="btn-cancel" id="modal-cancel">Cancel</button>
+	  <button class="btn-add" id="modal-add">Add</button>
+	</div>
   </div>
 </div>
 
@@ -295,64 +295,64 @@
   let manualOverride = null;
 
   function applyTheme(dark) {
-    html.classList.toggle("dark", dark);
-    html.classList.toggle("light", !dark);
-    themeBtn.textContent = dark ? "☀️" : "🌙";
-    themeBtn.title = dark ? "Switch to light mode" : "Switch to dark mode";
+	html.classList.toggle("dark", dark);
+	html.classList.toggle("light", !dark);
+	themeBtn.textContent = dark ? "☀️" : "🌙";
+	themeBtn.title = dark ? "Switch to light mode" : "Switch to dark mode";
   }
 
   function getSunTimes(lat, lng, date = new Date()) {
-    const rad = Math.PI / 180;
-    const day = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 86400000);
-    const B = (360 / 365) * (day - 81) * rad;
-    const eqTime = 9.87 * Math.sin(2 * B) - 7.53 * Math.cos(B) - 1.5 * Math.sin(B);
-    const decl = 23.45 * Math.sin(B) * rad;
-    const cosH = -Math.tan(lat * rad) * Math.tan(decl);
-    if (cosH < -1) return { sunrise: 0, sunset: 1440 };
-    if (cosH > 1)  return { sunrise: 720, sunset: 720 };
-    const H = Math.acos(cosH) / rad;
-    const noon = 720 - (lng * 4) - eqTime + (-date.getTimezoneOffset());
-    return { sunrise: noon - H * 4, sunset: noon + H * 4 };
+	const rad = Math.PI / 180;
+	const day = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 86400000);
+	const B = (360 / 365) * (day - 81) * rad;
+	const eqTime = 9.87 * Math.sin(2 * B) - 7.53 * Math.cos(B) - 1.5 * Math.sin(B);
+	const decl = 23.45 * Math.sin(B) * rad;
+	const cosH = -Math.tan(lat * rad) * Math.tan(decl);
+	if (cosH < -1) return { sunrise: 0, sunset: 1440 };
+	if (cosH > 1)  return { sunrise: 720, sunset: 720 };
+	const H = Math.acos(cosH) / rad;
+	const noon = 720 - (lng * 4) - eqTime + (-date.getTimezoneOffset());
+	return { sunrise: noon - H * 4, sunset: noon + H * 4 };
   }
 
   function isDarkBySun(lat, lng) {
-    const now = new Date();
-    const mins = now.getHours() * 60 + now.getMinutes();
-    const { sunrise, sunset } = getSunTimes(lat, lng);
-    return mins < sunrise || mins > sunset;
+	const now = new Date();
+	const mins = now.getHours() * 60 + now.getMinutes();
+	const { sunrise, sunset } = getSunTimes(lat, lng);
+	return mins < sunrise || mins > sunset;
   }
 
   function autoTheme() {
-    if (manualOverride !== null) return;
-    const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    if (mq.media !== "not all") {
-      applyTheme(mq.matches);
-      return;
-    }
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        pos => {
-          const { latitude: lat, longitude: lng } = pos.coords;
-          applyTheme(isDarkBySun(lat, lng));
-          setInterval(() => {
-            if (manualOverride === null) applyTheme(isDarkBySun(lat, lng));
-          }, 3600000);
-        },
-        () => applyTheme(false)
-      );
-    } else {
-      applyTheme(false);
-    }
+	if (manualOverride !== null) return;
+	const mq = window.matchMedia("(prefers-color-scheme: dark)");
+	if (mq.media !== "not all") {
+	  applyTheme(mq.matches);
+	  return;
+	}
+	if (navigator.geolocation) {
+	  navigator.geolocation.getCurrentPosition(
+		pos => {
+		  const { latitude: lat, longitude: lng } = pos.coords;
+		  applyTheme(isDarkBySun(lat, lng));
+		  setInterval(() => {
+			if (manualOverride === null) applyTheme(isDarkBySun(lat, lng));
+		  }, 3600000);
+		},
+		() => applyTheme(false)
+	  );
+	} else {
+	  applyTheme(false);
+	}
   }
 
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", e => {
-    if (manualOverride === null) applyTheme(e.matches);
+	if (manualOverride === null) applyTheme(e.matches);
   });
 
   themeBtn.addEventListener("click", () => {
-    const nowDark = html.classList.contains("dark");
-    manualOverride = nowDark ? "light" : "dark";
-    applyTheme(!nowDark);
+	const nowDark = html.classList.contains("dark");
+	manualOverride = nowDark ? "light" : "dark";
+	applyTheme(!nowDark);
   });
 
   autoTheme();
@@ -360,135 +360,165 @@
   // ── Symbols ────────────────────────────────────────────────────────────────
 
   let symbols = [
-    { char: "–",      label: "En dash" },
-    { char: "\u2018", label: "Single open quote" },
-    { char: "\u2019", label: "Single close quote" },
-    { char: "„",      label: "Double low quote" },
-    { char: "\u201D", label: "Double close quote" },
-    { char: "¡",      label: "Inverted exclamation" },
-    { char: "→",      label: "Right arrow" },
+	{ char: "–",      label: "En dash" },
+	{ char: "\u2018", label: "Single open quote" },
+	{ char: "\u2019", label: "Single close quote" },
+	{ char: "„",      label: "Double low quote" },
+	{ char: "\u201D", label: "Double close quote" },
+	{ char: "¡",      label: "Inverted exclamation" },
+	{ char: "→",      label: "Right arrow" },
 	{ char: "≤",      label: "Less or equal" },
   ];
 
   let dragSrc = null;
-  
   const grid       = document.getElementById("grid");
-  
   const editBtn    = document.getElementById("edit-btn");
+  const modal      = document.getElementById("modal");
+  const inputChar  = document.getElementById("input-char");
+  const inputLabel = document.getElementById("input-label");
+
   // Hide the Edit button in the Tauri app — edit mode is triggered via the tray menu
   if (window.__TAURI_INTERNALS__) {
-    editBtn.style.display = "none";
+	editBtn.style.display = "none";
   }
-  
-  const modal      = document.getElementById("modal");
-  
-  const inputChar  = document.getElementById("input-char");
-  
-  const inputLabel = document.getElementById("input-label");
 
   const addCard = document.createElement("div");
   addCard.className = "add-card";
   addCard.textContent = "+";
   addCard.addEventListener("click", () => {
-    inputChar.value = ""; inputLabel.value = "";
-    modal.classList.add("open");
-    setTimeout(() => inputChar.focus(), 50);
+	inputChar.value = ""; inputLabel.value = "";
+	modal.classList.add("open");
+	setTimeout(() => inputChar.focus(), 50);
   });
 
   function fallbackCopy(text, cb) {
-    const ta = document.createElement("textarea");
-    ta.value = text;
-    ta.style.cssText = "position:fixed;opacity:0";
-    document.body.appendChild(ta);
-    ta.focus(); ta.select();
-    try { document.execCommand("copy"); cb(); } catch(e) {}
-    document.body.removeChild(ta);
+	const ta = document.createElement("textarea");
+	ta.value = text;
+	ta.style.cssText = "position:fixed;opacity:0";
+	document.body.appendChild(ta);
+	ta.focus(); ta.select();
+	try { document.execCommand("copy"); cb(); } catch(e) {}
+	document.body.removeChild(ta);
   }
 
   function buildCard(sym) {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.draggable = true;
-    card.innerHTML = `
-      <span class="delete-btn">×</span>
-      <span class="toast">Copied</span>
-      <span class="symbol">${sym.char}</span>
-      <span class="label">${sym.label}</span>
-    `;
+	const card = document.createElement("div");
+	card.className = "card";
+	card.draggable = true;
+	card.innerHTML = `
+	  <span class="delete-btn">×</span>
+	  <span class="toast">Copied</span>
+	  <span class="symbol">${sym.char}</span>
+	  <span class="label">${sym.label}</span>
+	`;
 
-    card.querySelector(".delete-btn").addEventListener("click", e => {
-      e.stopPropagation();
-      const idx = [...grid.querySelectorAll(".card")].indexOf(card);
-      symbols.splice(idx, 1);
-      card.remove();
-    });
+	card.querySelector(".delete-btn").addEventListener("click", e => {
+	  e.stopPropagation();
+	  const idx = [...grid.querySelectorAll(".card")].indexOf(card);
+	  symbols.splice(idx, 1);
+	  card.remove();
+	});
 
-    let didDrag = false;
-    card.addEventListener("dragstart", () => didDrag = true);
-    card.addEventListener("click", () => {
-      if (document.body.classList.contains("edit-mode")) return;
-      if (didDrag) { didDrag = false; return; }
-      const confirm = () => { card.classList.add("copied"); setTimeout(() => card.classList.remove("copied"), 1200); };
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(sym.char).then(confirm).catch(() => fallbackCopy(sym.char, confirm));
-      } else { fallbackCopy(sym.char, confirm); }
-    });
+	let didDrag = false;
+	card.addEventListener("dragstart", () => didDrag = true);
+	card.addEventListener("click", () => {
+	  if (document.body.classList.contains("edit-mode")) return;
+	  if (didDrag) { didDrag = false; return; }
+	  const confirm = () => { card.classList.add("copied"); setTimeout(() => card.classList.remove("copied"), 1200); };
+	  if (navigator.clipboard) {
+		navigator.clipboard.writeText(sym.char).then(confirm).catch(() => fallbackCopy(sym.char, confirm));
+	  } else { fallbackCopy(sym.char, confirm); }
+	});
 
-    card.addEventListener("dragstart", e => {
-      dragSrc = card;
-      e.dataTransfer.effectAllowed = "move";
-      setTimeout(() => card.classList.add("dragging"), 0);
-    });
-    card.addEventListener("dragend", () => {
-      card.classList.remove("dragging");
-      grid.querySelectorAll(".card").forEach(c => c.classList.remove("drag-over"));
-    });
-    card.addEventListener("dragover", e => {
-      e.preventDefault();
-      if (card !== dragSrc) card.classList.add("drag-over");
-    });
-    card.addEventListener("dragleave", () => card.classList.remove("drag-over"));
-    card.addEventListener("drop", e => {
-      e.preventDefault();
-      card.classList.remove("drag-over");
-      if (!dragSrc || dragSrc === card) return;
-      const cards = [...grid.querySelectorAll(".card")];
-      const si = cards.indexOf(dragSrc), ti = cards.indexOf(card);
-      [symbols[si], symbols[ti]] = [symbols[ti], symbols[si]];
-      si < ti ? grid.insertBefore(dragSrc, card.nextSibling) : grid.insertBefore(dragSrc, card);
-    });
+	card.addEventListener("dragstart", e => {
+	  dragSrc = card;
+	  e.dataTransfer.effectAllowed = "move";
+	  setTimeout(() => card.classList.add("dragging"), 0);
+	});
+	card.addEventListener("dragend", () => {
+	  card.classList.remove("dragging");
+	  grid.querySelectorAll(".card").forEach(c => c.classList.remove("drag-over"));
+	});
+	card.addEventListener("dragover", e => {
+	  e.preventDefault();
+	  if (card !== dragSrc) card.classList.add("drag-over");
+	});
+	card.addEventListener("dragleave", () => card.classList.remove("drag-over"));
+	card.addEventListener("drop", e => {
+	  e.preventDefault();
+	  card.classList.remove("drag-over");
+	  if (!dragSrc || dragSrc === card) return;
+	  const cards = [...grid.querySelectorAll(".card")];
+	  const si = cards.indexOf(dragSrc), ti = cards.indexOf(card);
+	  [symbols[si], symbols[ti]] = [symbols[ti], symbols[si]];
+	  si < ti ? grid.insertBefore(dragSrc, card.nextSibling) : grid.insertBefore(dragSrc, card);
+	});
 
-    return card;
+	return card;
   }
 
   function renderAll() {
-    grid.innerHTML = "";
-    symbols.forEach(sym => grid.appendChild(buildCard(sym)));
-    grid.appendChild(addCard);
+	grid.innerHTML = "";
+	symbols.forEach(sym => grid.appendChild(buildCard(sym)));
+	grid.appendChild(addCard);
   }
 
-  editBtn.addEventListener("click", () => {
-    document.body.classList.toggle("edit-mode");
-    editBtn.classList.toggle("active");
-    editBtn.textContent = document.body.classList.contains("edit-mode") ? "Done" : "Edit";
-  });
+  // ── Edit mode ──────────────────────────────────────────────────────────────
+
+  function exitEditMode() {
+	document.body.classList.remove("edit-mode");
+	editBtn.classList.remove("active");
+	editBtn.textContent = "Edit";
+  }
 
   // Called by Tauri tray menu → "Edit Symbols"
   window.enterEditMode = function () {
-	  document.body.classList.add("edit-mode");
-	  editBtn.classList.add("active");
-	  editBtn.textContent = "Done";
+	document.body.classList.add("edit-mode");
+	editBtn.classList.add("active");
+	editBtn.textContent = "Done";
   };
+
+  // Called by Tauri when the panel is hidden (blur or tray click)
+  window.exitEditMode = exitEditMode;
+
+  // Edit button (web version only — hidden in Tauri)
+  editBtn.addEventListener("click", () => {
+	if (document.body.classList.contains("edit-mode")) {
+	  exitEditMode();
+	} else {
+	  window.enterEditMode();
+	}
+  });
+
+  // Exit edit mode on Escape
+  document.addEventListener("keydown", e => {
+	if (e.key === "Escape") {
+	  if (modal.classList.contains("open")) {
+		modal.classList.remove("open");
+	  } else if (document.body.classList.contains("edit-mode")) {
+		exitEditMode();
+	  }
+	}
+  });
+
+  // Exit edit mode on click on the grid background (not on a card)
+  grid.addEventListener("click", e => {
+	if (e.target === grid && document.body.classList.contains("edit-mode")) {
+	  exitEditMode();
+	}
+  });
+
+  // ── Modal ──────────────────────────────────────────────────────────────────
 
   document.getElementById("modal-cancel").addEventListener("click", () => modal.classList.remove("open"));
   document.getElementById("modal-add").addEventListener("click", () => {
-    const char = inputChar.value.trim();
-    const label = inputLabel.value.trim() || char;
-    if (!char) return;
-    const sym = { char, label };
-    symbols.push(sym);
-    grid.insertBefore(buildCard(sym), addCard);
-    modal.classList.remove("open");
+	const char = inputChar.value.trim();
+	const label = inputLabel.value.trim() || char;
+	if (!char) return;
+	const sym = { char, label };
+	symbols.push(sym);
+	grid.insertBefore(buildCard(sym), addCard);
+	modal.classList.remove("open");
   });
   modal.addEventListener("click", e => { if (e.target === modal) modal.classList.remove("open"); });
   inputLabel.addEventListener("keydown", e => { if (e.key === "Enter") document.getElementById("modal-add").click(); });
