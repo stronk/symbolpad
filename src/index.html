@@ -28,6 +28,9 @@
 	--delete-bg: #ee0055;
   }
 
+  /* Dark theme — applied by two selectors intentionally:
+	 .dark          → set by JS after load
+	 @media block   → applies before JS runs to prevent flash-of-wrong-theme */
   .dark {
 	--bg: #1a1a1a;
 	--card-bg: #252525;
@@ -290,7 +293,7 @@
 <script>
   // ── Theme ──────────────────────────────────────────────────────────────────
 
-  const html = document.documentElement;
+  const html     = document.documentElement;
   const themeBtn = document.getElementById("theme-btn");
   let manualOverride = null;
 
@@ -355,6 +358,17 @@
 	applyTheme(!nowDark);
   });
 
+  // Called by Tauri tray → Theme submenu
+  window.setTheme = function(mode) {
+	if (mode === "system") {
+	  manualOverride = null;
+	  autoTheme();
+	} else {
+	  manualOverride = mode;
+	  applyTheme(mode === "dark");
+	}
+  };
+
   autoTheme();
 
   // ── Symbols ────────────────────────────────────────────────────────────────
@@ -377,10 +391,8 @@
   const inputChar  = document.getElementById("input-char");
   const inputLabel = document.getElementById("input-label");
 
-  // Hide the Edit button in the Tauri app — edit mode is triggered via the tray menu
-  if (window.__TAURI_INTERNALS__) {
-	editBtn.style.display = "none";
-  }
+  // In the Tauri app, edit mode is triggered via the tray menu — hide the button
+  if (window.__TAURI_INTERNALS__) editBtn.style.display = "none";
 
   const addCard = document.createElement("div");
   addCard.className = "add-card";
@@ -420,17 +432,21 @@
 	});
 
 	let didDrag = false;
-	card.addEventListener("dragstart", () => didDrag = true);
+
 	card.addEventListener("click", () => {
 	  if (document.body.classList.contains("edit-mode")) return;
 	  if (didDrag) { didDrag = false; return; }
-	  const confirm = () => { card.classList.add("copied"); setTimeout(() => card.classList.remove("copied"), 1200); };
+	  const flash = () => { card.classList.add("copied"); setTimeout(() => card.classList.remove("copied"), 1200); };
 	  if (navigator.clipboard) {
-		navigator.clipboard.writeText(sym.char).then(confirm).catch(() => fallbackCopy(sym.char, confirm));
-	  } else { fallbackCopy(sym.char, confirm); }
+		navigator.clipboard.writeText(sym.char).then(flash).catch(() => fallbackCopy(sym.char, flash));
+	  } else {
+		fallbackCopy(sym.char, flash);
+	  }
 	});
 
+	// Single dragstart handler — sets didDrag flag and manages drag state
 	card.addEventListener("dragstart", e => {
+	  didDrag = true;
 	  dragSrc = card;
 	  e.dataTransfer.effectAllowed = "move";
 	  setTimeout(() => card.classList.add("dragging"), 0);
@@ -464,48 +480,35 @@
   }
 
   // ── Edit mode ──────────────────────────────────────────────────────────────
+  // Exposed on window so Tauri can call them via eval()
 
-  function exitEditMode() {
-	document.body.classList.remove("edit-mode");
-	editBtn.classList.remove("active");
-	editBtn.textContent = "Edit";
-  }
-
-  // Called by Tauri tray menu → "Edit Symbols"
-  window.enterEditMode = function () {
+  window.enterEditMode = function() {
 	document.body.classList.add("edit-mode");
 	editBtn.classList.add("active");
 	editBtn.textContent = "Done";
   };
 
-  // Called by Tauri when the panel is hidden (blur or tray click)
-  window.exitEditMode = exitEditMode;
+  window.exitEditMode = function() {
+	document.body.classList.remove("edit-mode");
+	editBtn.classList.remove("active");
+	editBtn.textContent = "Edit";
+  };
 
-  // Edit button (web version only — hidden in Tauri)
+  // Edit button — web version only, hidden in Tauri
   editBtn.addEventListener("click", () => {
-	if (document.body.classList.contains("edit-mode")) {
-	  exitEditMode();
-	} else {
-	  window.enterEditMode();
-	}
+	document.body.classList.contains("edit-mode") ? window.exitEditMode() : window.enterEditMode();
   });
 
-  // Exit edit mode on Escape
+  // Esc: close modal if open, otherwise exit edit mode
   document.addEventListener("keydown", e => {
-	if (e.key === "Escape") {
-	  if (modal.classList.contains("open")) {
-		modal.classList.remove("open");
-	  } else if (document.body.classList.contains("edit-mode")) {
-		exitEditMode();
-	  }
-	}
+	if (e.key !== "Escape") return;
+	if (modal.classList.contains("open")) modal.classList.remove("open");
+	else if (document.body.classList.contains("edit-mode")) window.exitEditMode();
   });
 
-  // Exit edit mode on click on the grid background (not on a card)
+  // Click on grid background exits edit mode
   grid.addEventListener("click", e => {
-	if (e.target === grid && document.body.classList.contains("edit-mode")) {
-	  exitEditMode();
-	}
+	if (e.target === grid && document.body.classList.contains("edit-mode")) window.exitEditMode();
   });
 
   // ── Modal ──────────────────────────────────────────────────────────────────
@@ -513,9 +516,8 @@
   document.getElementById("modal-cancel").addEventListener("click", () => modal.classList.remove("open"));
   document.getElementById("modal-add").addEventListener("click", () => {
 	const char = inputChar.value.trim();
-	const label = inputLabel.value.trim() || char;
 	if (!char) return;
-	const sym = { char, label };
+	const sym = { char, label: inputLabel.value.trim() || char };
 	symbols.push(sym);
 	grid.insertBefore(buildCard(sym), addCard);
 	modal.classList.remove("open");
