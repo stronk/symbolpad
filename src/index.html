@@ -371,10 +371,19 @@
   ];
 
   let dragSrc = null;
+  
   const grid       = document.getElementById("grid");
+  
   const editBtn    = document.getElementById("edit-btn");
+  // Hide the Edit button in the Tauri app — edit mode is triggered via the tray menu
+  if (window.__TAURI_INTERNALS__) {
+    editBtn.style.display = "none";
+  }
+  
   const modal      = document.getElementById("modal");
+  
   const inputChar  = document.getElementById("input-char");
+  
   const inputLabel = document.getElementById("input-label");
 
   const addCard = document.createElement("div");
@@ -463,6 +472,13 @@
     editBtn.classList.toggle("active");
     editBtn.textContent = document.body.classList.contains("edit-mode") ? "Done" : "Edit";
   });
+
+  // Called by Tauri tray menu → "Edit Symbols"
+  window.enterEditMode = function () {
+	  document.body.classList.add("edit-mode");
+	  editBtn.classList.add("active");
+	  editBtn.textContent = "Done";
+  };
 
   document.getElementById("modal-cancel").addEventListener("click", () => modal.classList.remove("open"));
   document.getElementById("modal-add").addEventListener("click", () => {

@@ -4,6 +4,7 @@ use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
 use tauri::{
 	image::Image,
+	menu::{Menu, MenuItem},
 	tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
 	Manager, WindowEvent,
 };
@@ -19,16 +20,12 @@ fn main() {
 			let window = app.get_webview_window("main").unwrap();
 			let win_blur = window.clone();
 
-			// Hide on startup — only show when tray icon is clicked
 			let _ = window.hide();
 
-			// Track when window was last shown so blur doesn't
-			// immediately close it if focus briefly flickers
 			let last_shown = Arc::new(Mutex::new(Instant::now() - Duration::from_secs(10)));
 			let last_shown_blur = last_shown.clone();
 			let last_shown_tray = last_shown.clone();
 
-			// Hide when clicking outside the panel
 			window.on_window_event(move |event| {
 				if let WindowEvent::Focused(false) = event {
 					let elapsed = last_shown_blur.lock().unwrap().elapsed();
@@ -41,13 +38,33 @@ fn main() {
 			let icon = Image::from_bytes(include_bytes!("../icons/tray.png"))
 				.unwrap_or_else(|_| app.default_window_icon().unwrap().clone());
 
+			// Right-click context menu
+			let edit_item = MenuItem::with_id(app, "edit", "Edit Symbols", true, None::<&str>)?;
+			let quit_item = MenuItem::with_id(app, "quit", "Quit SymbolPad", true, None::<&str>)?;
+			let menu = Menu::with_items(app, &[&edit_item, &quit_item])?;
+
 			let win_tray = window.clone();
+			let win_menu = window.clone();
+
 			TrayIconBuilder::new()
 				.icon(icon)
 				.icon_as_template(true)
+				.menu(&menu)
+				.menu_on_left_click(false)  // left click toggles panel; right click shows menu
+				.on_menu_event(move |app, event| {
+					match event.id.as_ref() {
+						"quit" => app.exit(0),
+						"edit" => {
+							let _ = win_menu.move_window(Position::TrayCenter);
+							let _ = win_menu.show();
+							let _ = win_menu.set_focus();
+							let _ = win_menu.eval("enterEditMode()");
+						}
+						_ => {}
+					}
+				})
 				.on_tray_icon_event(move |tray, event| {
 					tauri_plugin_positioner::on_tray_event(tray.app_handle(), &event);
-					// Only act on left button release to avoid double-firing
 					if let TrayIconEvent::Click {
 						button: MouseButton::Left,
 						button_state: MouseButtonState::Up,
