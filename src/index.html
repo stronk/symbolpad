@@ -391,8 +391,12 @@
   const inputChar  = document.getElementById("input-char");
   const inputLabel = document.getElementById("input-label");
 
-  // In the Tauri app, edit mode is triggered via the tray menu — hide the button
-  if (window.__TAURI_INTERNALS__) editBtn.style.display = "none";
+  // In the Tauri app, hide controls that are handled via the tray menu instead
+  if (window.__TAURI_INTERNALS__) {
+	editBtn.style.display = "none";
+	themeBtn.style.display = "none";
+	document.querySelector("h1").style.display = "none";
+  }
 
   const addCard = document.createElement("div");
   addCard.className = "add-card";

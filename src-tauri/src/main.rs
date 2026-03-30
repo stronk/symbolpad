@@ -4,7 +4,7 @@ use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
 use tauri::{
 	image::Image,
-	menu::{Menu, MenuItem, Submenu},
+	menu::{CheckMenuItem, Menu, MenuItem, Submenu},
 	tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
 	Manager, WindowEvent,
 };
@@ -45,10 +45,13 @@ fn main() {
 
 			// Right-click context menu
 			let edit_item   = MenuItem::with_id(app, "edit",         "Edit Symbols",  true, None::<&str>)?;
-			let theme_auto  = MenuItem::with_id(app, "theme_system", "System (Auto)", true, None::<&str>)?;
-			let theme_light = MenuItem::with_id(app, "theme_light",  "Light",         true, None::<&str>)?;
-			let theme_dark  = MenuItem::with_id(app, "theme_dark",   "Dark",          true, None::<&str>)?;
+			// CheckMenuItems so the active theme is visually indicated
+			let theme_auto  = CheckMenuItem::with_id(app, "theme_system", "System (Auto)", true, true,  None::<&str>)?;
+			let theme_light = CheckMenuItem::with_id(app, "theme_light",  "Light",         true, false, None::<&str>)?;
+			let theme_dark  = CheckMenuItem::with_id(app, "theme_dark",   "Dark",          true, false, None::<&str>)?;
 			let theme_menu  = Submenu::with_items(app, "Theme", true, &[&theme_auto, &theme_light, &theme_dark])?;
+			// Clones for use inside the menu event closure
+			let (ta, tl, td) = (theme_auto.clone(), theme_light.clone(), theme_dark.clone());
 			let quit_item   = MenuItem::with_id(app, "quit",         "Quit",          true, None::<&str>)?;
 			let menu = Menu::with_items(app, &[&edit_item, &theme_menu, &quit_item])?;
 
@@ -70,9 +73,24 @@ fn main() {
 							let _ = win_menu.set_focus();
 							let _ = win_menu.eval("enterEditMode()");
 						}
-						"theme_system" => { let _ = win_menu.eval("setTheme('system')"); }
-						"theme_light"  => { let _ = win_menu.eval("setTheme('light')"); }
-						"theme_dark"   => { let _ = win_menu.eval("setTheme('dark')"); }
+						"theme_system" => {
+							let _ = ta.set_checked(true);
+							let _ = tl.set_checked(false);
+							let _ = td.set_checked(false);
+							let _ = win_menu.eval("setTheme('system')");
+						}
+						"theme_light" => {
+							let _ = ta.set_checked(false);
+							let _ = tl.set_checked(true);
+							let _ = td.set_checked(false);
+							let _ = win_menu.eval("setTheme('light')");
+						}
+						"theme_dark" => {
+							let _ = ta.set_checked(false);
+							let _ = tl.set_checked(false);
+							let _ = td.set_checked(true);
+							let _ = win_menu.eval("setTheme('dark')");
+						}
 						_              => {}
 					}
 				})
