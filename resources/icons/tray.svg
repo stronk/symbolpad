@@ -1,20 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
   <defs>
-    <mask id="cutout">
+    <mask id="g">
       <rect width="32" height="32" fill="white"/>
-      <text
-        x="9.88"
-        y="14.12"
-        font-family="Georgia, 'Times New Roman', serif"
-        font-size="22"
-        fill="black"
-      >„</text>
+      <path d="M16.3,15.9 L11.7,7.5 L15.3,7.5 L21.6,15.9 L15.3,24.5 L11.7,24.5 Z" fill="black"/>
     </mask>
   </defs>
-
-  <!-- Key body -->
-  <rect x="3" y="3" width="23" height="23" rx="4" fill="#000" mask="url(#cutout)"/>
-  <!-- Key inner bevel -->
-  <rect x="5" y="5" width="19" height="19" rx="3" fill="#333" mask="url(#cutout)"/>
-
+  <rect x="1" y="1" width="30" height="30" rx="7" fill="#000" mask="url(#g)"/>
 </svg>
