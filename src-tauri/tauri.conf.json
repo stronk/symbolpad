@@ -1,6 +1,6 @@
 {
   "productName": "SymbolPad",
-  "version": "0.2.09",
+  "version": "0.2.0",
   "identifier": "com.symbolpad",
   "build": {
 	"frontendDist": "../src"
@@ -20,9 +20,7 @@
 		"skipTaskbar": true,
 		"shadow": false
 	  }
-	]
-  },
-  "app": {
+	],
 	"security": {
 	  "capabilities": [
 		{
