@@ -83,11 +83,10 @@
 
   body {
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-	background: var(--bg);
+	background: transparent;
 	color: var(--text);
-	min-height: 100vh;
-	padding: 2rem;
-	transition: background 0.4s, color 0.4s;
+	margin: 0;
+	padding: 0;
   }
 
   /* ── Tauri panel shape ────────────────────────────────────────────────────
@@ -99,12 +98,10 @@
   html[data-tauri],
   html[data-tauri] body {
 	background: transparent !important;
-	background-color: transparent !important;
-	padding: 0;
 	margin: 0;
-	min-height: 0 !important;
-	height: fit-content !important;
-	overflow: visible;
+	padding: 0;
+	height: auto;
+	overflow: hidden;
   }
 
   /* Notch: hidden in browser, visible in Tauri */
@@ -125,16 +122,18 @@
   }
 
   /* Panel: full-bleed in browser, floating rounded card in Tauri */
+  /* Panel is the only coloured surface — works in both web and Tauri */
   .panel {
 	background: var(--bg);
 	padding: 1.5rem;
 	min-height: 100vh;
 	transition: background 0.4s, color 0.4s;
   }
+  /* In Tauri: floating rounded card, rest of window is see-through */
   html[data-tauri] .panel {
 	background: var(--panel-bg);
 	border-radius: 14px;
-	box-shadow: 0 16px 48px rgba(0,0,0,0.6), 0 0 0 0.5px rgba(255,255,255,0.1);
+	box-shadow: 0 16px 48px rgba(0,0,0,0.55), 0 0 0 0.5px rgba(255,255,255,0.08);
 	padding: 1.25rem 1.25rem 1rem;
 	margin: 0 8px 8px 8px;
 	min-height: unset;
