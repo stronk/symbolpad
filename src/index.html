@@ -99,7 +99,9 @@
   html[data-tauri] body {
 	background: transparent !important;
 	padding: 0;
-	min-height: unset;
+	margin: 0;
+	min-height: 0 !important;
+	height: auto !important;
 	overflow: hidden;
   }
 
@@ -110,12 +112,14 @@
   html[data-tauri] .notch {
 	display: block;
 	width: 100%;
-	height: 10px;
+	height: 14px;
 	text-align: center;
 	line-height: 0;
+	margin-bottom: -1px; /* flush with panel top */
   }
   html[data-tauri] .notch svg {
 	display: inline-block;
+	vertical-align: bottom;
   }
 
   /* Panel: full-bleed in browser, floating rounded card in Tauri */
@@ -320,8 +324,8 @@
 
 <div class="notch">
   <!-- SVG notch pointing up toward the tray icon -->
-  <svg width="20" height="10" viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg">
-	<path d="M0,10 Q10,0 20,10 Z" fill="var(--panel-bg)"/>
+  <svg width="28" height="14" viewBox="0 0 28 14" xmlns="http://www.w3.org/2000/svg">
+	<path d="M0,14 Q14,0 28,14 Z" fill="var(--panel-bg)"/>
   </svg>
 </div>
 <div class="panel">

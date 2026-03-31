@@ -20,6 +20,13 @@ fn main() {
 			let window = app.get_webview_window("main").unwrap();
 			let win_blur = window.clone();
 
+			// Make the webview background fully transparent on macOS
+			#[cfg(target_os = "macos")]
+			{
+				use tauri::WebviewWindowExt;
+				window.set_background_color(Some(tauri::Color(0, 0, 0, 0))).ok();
+			}
+
 			// Hide on startup — only show when tray icon is clicked
 			let _ = window.hide();
 
