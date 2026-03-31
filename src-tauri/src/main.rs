@@ -20,6 +20,14 @@ fn main() {
 			let window = app.get_webview_window("main").unwrap();
 			let win_blur = window.clone();
 
+			// Make WKWebView background transparent — tauri.conf transparent:true
+			// only affects the window frame; this clears the webview layer itself
+			#[cfg(target_os = "macos")]
+			{
+				use tauri::window::Color;
+				window.set_background_color(Some(Color(0, 0, 0, 0))).ok();
+			}
+
 			// Hide on startup — only show when tray icon is clicked
 			let _ = window.hide();
 
