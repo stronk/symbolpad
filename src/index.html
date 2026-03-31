@@ -613,22 +613,6 @@
 
   renderAll();
 
-  // ── Fit window to content (Tauri only) ────────────────────────────────────
-  // Resizes the window to exactly the panel height, eliminating the
-  // transparent strip below. Uses __TAURI_INTERNALS__.invoke (Tauri 2).
-  if (window.__TAURI_INTERNALS__) {
-	function fitWindow() {
-	  const panel = document.querySelector(".panel");
-	  const notch = document.querySelector(".notch");
-	  const scale = window.devicePixelRatio || 1;
-	  const h = Math.round((notch.offsetHeight + panel.offsetHeight) * scale);
-	  window.__TAURI_INTERNALS__.invoke("fit_window", { height: h });
-	}
-	requestAnimationFrame(fitWindow);
-	// Re-fit when edit mode toggles (panel height changes)
-	const observer = new MutationObserver(fitWindow);
-	observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
-  }
 </script>
 </body>
 </html>

@@ -11,7 +11,7 @@
 		"label": "main",
 		"title": "Symbol Pad",
 		"width": 500,
-		"height": 340,
+		"height": 270,
 		"decorations": false,
 		"transparent": true,
 		"alwaysOnTop": true,
