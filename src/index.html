@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="transparent">
 <title>Symbol Pad</title>
 <style>
   :root {
@@ -98,11 +99,12 @@
   html[data-tauri],
   html[data-tauri] body {
 	background: transparent !important;
+	background-color: transparent !important;
 	padding: 0;
 	margin: 0;
 	min-height: 0 !important;
-	height: auto !important;
-	overflow: hidden;
+	height: fit-content !important;
+	overflow: visible;
   }
 
   /* Notch: hidden in browser, visible in Tauri */
