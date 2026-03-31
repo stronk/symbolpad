@@ -612,6 +612,24 @@
   inputLabel.addEventListener("keydown", e => { if (e.key === "Enter") document.getElementById("modal-add").click(); });
 
   renderAll();
+
+  // ── Fit window to content (Tauri only) ────────────────────────────────────
+  // After render, report exact content height to Rust so the window
+  // shrinks to fit — eliminating the transparent strip below the panel.
+  if (window.__TAURI_INTERNALS__) {
+	const { invoke } = window.__TAURI_INTERNALS__;
+	function fitWindow() {
+	  const panel  = document.querySelector(".panel");
+	  const notch  = document.querySelector(".notch");
+	  const scale  = window.devicePixelRatio || 1;
+	  const h = Math.round((notch.offsetHeight + panel.offsetHeight) * scale);
+	  invoke("fit_window", { height: h });
+	}
+	// Fit on load and whenever edit mode changes (add card appears)
+	requestAnimationFrame(fitWindow);
+	const observer = new MutationObserver(fitWindow);
+	observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+  }
 </script>
 </body>
 </html>
