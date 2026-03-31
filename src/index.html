@@ -614,19 +614,18 @@
   renderAll();
 
   // ── Fit window to content (Tauri only) ────────────────────────────────────
-  // After render, report exact content height to Rust so the window
-  // shrinks to fit — eliminating the transparent strip below the panel.
+  // Resizes the window to exactly the panel height, eliminating the
+  // transparent strip below. Uses __TAURI_INTERNALS__.invoke (Tauri 2).
   if (window.__TAURI_INTERNALS__) {
-	const { invoke } = window.__TAURI_INTERNALS__;
 	function fitWindow() {
-	  const panel  = document.querySelector(".panel");
-	  const notch  = document.querySelector(".notch");
-	  const scale  = window.devicePixelRatio || 1;
+	  const panel = document.querySelector(".panel");
+	  const notch = document.querySelector(".notch");
+	  const scale = window.devicePixelRatio || 1;
 	  const h = Math.round((notch.offsetHeight + panel.offsetHeight) * scale);
-	  invoke("fit_window", { height: h });
+	  window.__TAURI_INTERNALS__.invoke("fit_window", { height: h });
 	}
-	// Fit on load and whenever edit mode changes (add card appears)
 	requestAnimationFrame(fitWindow);
+	// Re-fit when edit mode toggles (panel height changes)
 	const observer = new MutationObserver(fitWindow);
 	observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
   }

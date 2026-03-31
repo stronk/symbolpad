@@ -1,6 +1,6 @@
 {
   "productName": "SymbolPad",
-  "version": "0.2.0",
+  "version": "0.2.09",
   "identifier": "com.symbolpad",
   "build": {
 	"frontendDist": "../src"
@@ -22,13 +22,22 @@
 	  }
 	]
   },
+  "app": {
+	"security": {
+	  "capabilities": [
+		{
+		  "identifier": "main",
+		  "description": "Main window capabilities",
+		  "windows": ["main"],
+		  "permissions": ["core:window:allow-set-size", "core:default"]
+		}
+	  ]
+	}
+  },
   "bundle": {
 	"active": true,
 	"targets": "all",
-	"icon": [
-	  "icons/icon.png",
-	  "icons/icon.ico"
-	],
+	"icon": ["icons/icon.png", "icons/icon.ico"],
 	"macOS": {
 	  "infoPlist": "Info.plist"
 	}
