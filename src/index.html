@@ -132,15 +132,16 @@
 	min-height: 100vh;
 	transition: background 0.4s, color 0.4s;
   }
-  /* In Tauri: floating rounded card, rest of window is see-through */
+  /* In Tauri: floating panel — width fixed, height grows with content */
   html[data-tauri] .panel {
 	background: var(--panel-bg);
 	border-radius: 14px;
 	box-shadow: 0 16px 48px rgba(0,0,0,0.55), 0 0 0 0.5px rgba(255,255,255,0.08);
-	padding: 1.25rem 1.25rem 1rem;
+	padding: 16px;
 	margin: 0 8px 8px 8px;
-	min-height: unset;
-	overflow: hidden;
+	width: 484px;
+	box-sizing: border-box;
+	overflow: visible;
 	transition: background 0.4s, color 0.4s;
   }
 
@@ -180,7 +181,12 @@
   .grid {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 0.75rem;
+	gap: 10px;
+	overflow-y: auto;
+  }
+  /* In Tauri: grid grows with content, no scroll */
+  html[data-tauri] .grid {
+	align-content: flex-start;
   }
 
   .card {
@@ -199,6 +205,8 @@
 	gap: 0.4rem;
   }
   .card:hover { border-color: var(--card-border-hover); box-shadow: 0 2px 8px var(--shadow); transform: translateY(-1px); }
+  html[data-tauri] .card,
+  html[data-tauri] .add-card { width: 105px; height: 105px; }
   .card:active { cursor: grabbing; }
   .card.copied { border-color: var(--copied-border); background: var(--copied-bg); }
   .card.dragging { opacity: 0.35; transform: scale(0.97); cursor: grabbing; }
@@ -615,6 +623,34 @@
   inputLabel.addEventListener("keydown", e => { if (e.key === "Enter") document.getElementById("modal-add").click(); });
 
   renderAll();
+
+  // ── Fit window to content (Tauri only) ────────────────────────────────────
+  // Measures notch + panel height and resizes the window to match.
+  // Fires after render and after any layout change (edit mode, add/remove card).
+  if (window.__TAURI_INTERNALS__) {
+	let fitTimer = null;
+
+	function fitWindow() {
+	  clearTimeout(fitTimer);
+	  fitTimer = setTimeout(() => {
+		const notch = document.querySelector(".notch");
+		const panel = document.querySelector(".panel");
+		const scale = window.devicePixelRatio || 1;
+		const h = Math.round((notch.offsetHeight + panel.offsetHeight + 8) * scale);
+		window.__TAURI_INTERNALS__.invoke("fit_window", { height: h });
+	  }, 50);
+	}
+
+	requestAnimationFrame(fitWindow);
+
+	// Re-fit when edit mode toggles (add card appears/disappears)
+	const bodyObserver = new MutationObserver(fitWindow);
+	bodyObserver.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+
+	// Re-fit when cards are added or removed
+	const gridObserver = new MutationObserver(fitWindow);
+	gridObserver.observe(document.getElementById("grid"), { childList: true });
+  }
 
 </script>
 </body>

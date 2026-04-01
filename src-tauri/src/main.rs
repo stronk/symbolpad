@@ -6,13 +6,21 @@ use tauri::{
 	image::Image,
 	menu::{CheckMenuItem, Menu, MenuItem, Submenu},
 	tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
-	Manager, WindowEvent,
+	Manager, PhysicalSize, WindowEvent,
 };
 use tauri_plugin_positioner::{Position, WindowExt};
+
+#[tauri::command]
+fn fit_window(window: tauri::WebviewWindow, height: u32) {
+	if let Ok(current) = window.outer_size() {
+		let _ = window.set_size(PhysicalSize::new(current.width, height));
+	}
+}
 
 fn main() {
 	tauri::Builder::default()
 		.plugin(tauri_plugin_positioner::init())
+		.invoke_handler(tauri::generate_handler![fit_window])
 		.setup(|app| {
 			#[cfg(target_os = "macos")]
 			app.set_activation_policy(tauri::ActivationPolicy::Accessory);
