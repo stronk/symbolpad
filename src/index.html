@@ -137,7 +137,7 @@
 	background: var(--panel-bg);
 	border-radius: 14px;
 	box-shadow: 0 16px 48px rgba(0,0,0,0.55), 0 0 0 0.5px rgba(255,255,255,0.08);
-	padding: 16px;
+	padding: 10px;
 	margin: 0 8px 8px 8px;
 	width: 484px;
 	box-sizing: border-box;
@@ -181,10 +181,9 @@
   .grid {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 10px;
+	gap: 10px; /* equal horizontal and vertical gap */
 	overflow-y: auto;
   }
-  /* In Tauri: grid grows with content, no scroll */
   html[data-tauri] .grid {
 	align-content: flex-start;
   }
