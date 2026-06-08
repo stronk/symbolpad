@@ -17,7 +17,7 @@ jobs:
         run: |
           xcodebuild \
             -project mac/SymbolPad.xcodeproj \
-            -scheme SymbolPad \
+            -target SymbolPad \
             -configuration Release \
             CODE_SIGNING_ALLOWED=NO \
             build
