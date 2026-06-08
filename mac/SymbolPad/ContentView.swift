@@ -3,6 +3,7 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject private var store: SymbolStore
     @EnvironmentObject private var appState: AppState
+    @AppStorage("theme") private var theme: AppTheme = .system
     @State private var copiedID: UUID?
     @State private var showAdd = false
 
@@ -19,6 +20,7 @@ struct ContentView: View {
             }
         }
         .frame(width: 420)
+        .preferredColorScheme(theme.colorScheme)
         .sheet(isPresented: $showAdd) {
             AddSymbolView { sym in store.add(sym) }
         }

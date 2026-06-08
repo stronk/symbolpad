@@ -49,7 +49,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func showPopover() {
         guard let button = statusItem.button else { return }
-        applyTheme()
         popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
         popover.contentViewController?.view.window?.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
@@ -110,15 +109,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    @objc private func setThemeSystem() { theme = .system; applyTheme() }
-    @objc private func setThemeLight()  { theme = .light;  applyTheme() }
-    @objc private func setThemeDark()   { theme = .dark;   applyTheme() }
-
-    private func applyTheme() {
-        switch theme {
-        case .system: NSApp.appearance = nil
-        case .light:  NSApp.appearance = NSAppearance(named: .aqua)
-        case .dark:   NSApp.appearance = NSAppearance(named: .darkAqua)
-        }
-    }
+    @objc private func setThemeSystem() { theme = .system }
+    @objc private func setThemeLight()  { theme = .light }
+    @objc private func setThemeDark()   { theme = .dark }
 }
